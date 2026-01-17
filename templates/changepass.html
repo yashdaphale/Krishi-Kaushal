@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Change Password | Krishi Kaushal</title>
+  <style>
+    /* Reset & Basic Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f4f4f4; color: #333; line-height: 1.6; }
+    /* Header */
+    .header { background: #006400; color: #fff; padding: 20px 0; text-align: center; position: relative; }
+    .header .header-left {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+    }
+    .header .header-left img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    .header .header-left h1 {
+      font-size: 24px;
+    }
+    .header-title { font-size: 28px; }
+    /* Container for Form */
+    .container { 
+      width: 90%; 
+      max-width: 600px; 
+      margin: 40px auto; 
+      background: #fff; 
+      padding: 20px; 
+      border-radius: 10px; 
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+    }
+    /* Form Styles */
+    form label { display: block; margin: 10px 0 5px; }
+    form input { 
+      width: 100%; 
+      padding: 8px; 
+      margin-bottom: 10px; 
+      border: 1px solid #ccc; 
+      border-radius: 4px; 
+    }
+    form button { 
+      padding: 10px 15px; 
+      background: #006400; 
+      color: #fff; 
+      border: none; 
+      border-radius: 4px; 
+      cursor: pointer; 
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header with Website Name, Logo, and Page Title -->
+  <header class="header">
+    <div class="header-left">
+      <img src="GTlogo.png" alt="Krishi Kaushal Logo">
+      <h1>Krishi Kaushal</h1>
+    </div>
+    <h1 class="header-title">Change Password</h1>
+  </header>
+
+  <!-- Main Content Container -->
+  <div class="container">
+    <form id="changePasswordForm" action="/profile/change-password" method="POST">
+      <label for="oldPassword">Old Password:</label>
+      <input type="password" id="oldPassword" name="oldPassword" placeholder="Enter your old password" required>
+      
+      <label for="newPassword">New Password:</label>
+      <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password" required>
+      
+      <label for="confirmPassword">Confirm New Password:</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your new password" required>
+      
+      <button type="submit">Done</button>
+    </form>
+  </div>
+
+  <!-- JavaScript to validate password matching -->
+  <script>
+    document.getElementById('changePasswordForm').addEventListener('submit', function(e){
+      e.preventDefault(); // Prevent form from submitting immediately
+      const newPass = document.getElementById('newPassword').value;
+      const confirmPass = document.getElementById('confirmPassword').value;
+      if(newPass !== confirmPass) {
+        alert('New Password and Confirm Password do not match.');
+        return;
+      }
+      // In a real implementation, you would send an AJAX request or allow the form to submit.
+      alert('Password changed successfully!');
+      // Optionally, redirect the user after successful password change.
+      // window.location.href = '/profile';
+    });
+  </script>
+</body>
+</html>

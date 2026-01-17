@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Rental - Krishi Kaushal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/equipments.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script defer src="{{ url_for('static', filename='js/equipments.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/serach_bar.js') }}"></script>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='img/GTlogo.png') }}" alt="Krishi Kaushal Logo" class="logo">
+            <h1>Krishi Kaushal</h1>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for equipment..." class="search-input" id="searchInput">
+            <button class="search-btn" id="searchBtn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="auth">
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.signup') }}">Sign Up</a>
+        </div>
+    </header>
+
+    <!-- Equipment Section Grouped by Category -->
+    <section class="equipment-section">
+        {% for category, items in equipments|groupby('category') %}
+        <div class="category-group">
+            <h2>{{ category }}</h2>
+            <div class="equipment-row-container">
+                <div class="equipment-row">
+                    {% for eq in items %}
+                    <div class="box">
+                        <img src="{{ equipment.image }}" alt="{{ equipment.name }}">
+                        <h3>{{ eq.name }}</h3>
+                        <p>Price: {{ eq.price }}</p>
+                        <p>Contact: {{ eq.contact }}</p>
+                        <a href="{{ url_for('order.order', equipment_id=eq.id) }}" class="rent-btn">Rent Now</a>
+                        <a href="{{ url_for('equipment.more_info', equipment_id=eq.id) }}" class="info-btn">More Info</a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+
+    <section class="equipment-support">
+        <div class="container">
+            <h2>EQUIPMENT SUPPORT</h2>
+            <p>If there is any problem while using the equipment, you can call us. We will try to solve your problem.</p>
+            <p class="contact">Mobile Number: 9146921800</p>
+            <p class="contact">Email: <a href="mailto:farmingassist2024@gmail.com">farmingassist2024@gmail.com</a></p>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('.equipment-row');
+            
+            rows.forEach(row => {
+                const checkOverflow = () => {
+                    if (row.scrollWidth > row.clientWidth) {
+                        row.classList.add('overflowing');
+                    } else {
+                        row.classList.remove('overflowing');
+                    }
+                };
+                
+                checkOverflow();
+                window.addEventListener('resize', checkOverflow);
+            });
+        });
+    </script>
+</body>
+</html>

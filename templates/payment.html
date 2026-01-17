@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="Stylesheet" href="Style.css">
+    <script defer src="payment.js"></script>
+    <title>Payment Page - Agricultural Equipment Rental</title>
+</head>
+<body>
+    <header>
+        <section class="equipment-rental"> 
+            <div class="rental-content">
+                <h2>Payment for Equipment Rental</h2>
+            </div>
+        </section>
+    </header>
+
+    <section class="payment-section">
+        <h3>Select Equipment</h3>
+
+
+
+        <!-- Dropdown List for Equipment Selection -->
+        <label for="equipmentDropdown">Choose Equipment:</label>
+        <select id="equipmentDropdown">
+            <option value="tractor" data-price="500">Ripper - 100rs/day</option>
+            <option value="plow" data-price="300">hydraulic-harrow - 600rs/day</option>
+            <option value="harrow" data-price="200">Sub Soilers- 400rs/day</option>
+            <option value="mower" data-price="350">Plow - 220rs/day</option>
+            <option value="tractor" data-price="500">Driller - 400rs/day</option>
+
+            <option value="plow" data-price="300">Regular Tractor - 500rs/day</option>
+            <option value="harrow" data-price="200">Heavy Tractor- 800rs/day</option>
+            <option value="mower" data-price="350">Utility Tractor - 450rs/day</option>
+            <option value="plow" data-price="300">Row Crop Tractor - 400rs/day</option>
+            <option value="harrow" data-price="200">Farm Tractor- 800rs/day</option>
+            <option value="mower" data-price="350">Paddy Field Tractor - 450rs/day</option>
+            <option value="plow" data-price="300">Mini Power Tiller - 300rs/day</option>
+            
+            <option value="harrow" data-price="200">Seeder- 450rs/day</option>
+            <option value="mower" data-price="350">Zero Till- 100rs/day</option>
+            <option value="harrow" data-price="200">Post Hole Digger- 500rs/day</option>
+            <option value="mower" data-price="350">Pneumatic-planter- 400rs/day</option>
+
+            <option value="plow" data-price="300">Multi-crop-harvester - 600rs/day</option>
+            <option value="harrow" data-price="200">Sugar-cane-loader- 450rs/day</option>
+            <option value="mower" data-price="350">Combine harvester - 400rs/day</option>
+            <option value="plow" data-price="300">Rotary-mulcher - 500rs/day</option>
+            <option value="harrow" data-price="200">Heavy Rake- 300rs/day</option>
+            <option value="mower" data-price="350">Square-baler - 450rs/day</option>
+
+            <option value="harrow" data-price="200">Landscape-rake- 200rs/day</option>
+            <option value="mower" data-price="350">Leveler- 650rs/day</option>
+            <option value="harrow" data-price="200">Rotary-cutter- 550rs/day</option>
+            <option value="mower" data-price="350">Box Blade- 400rs/day</option>
+
+            <option value="harrow" data-price="200">Boom Sprayer- 400rs/day</option>
+            <option value="mower" data-price="350">Fertilizer-spreader- 600rs/day</option>
+            <option value="harrow" data-price="200">Drone- 600rs/day</option>
+
+
+        </select>
+        <button onclick="addEquipment()">Add Equipment</button>
+
+        <!-- List of Selected Equipment -->
+        <h3>Selected Equipment</h3>
+        <ul id="selected-equipment-list"></ul>
+
+        <h3>Rental Duration</h3>
+        <label for="duration">Select Duration (days):</label>
+        <input type="number" id="duration" min="1" value="1" onchange="calculateTotal()">
+
+        <h3>Total Cost Breakdown</h3>
+        <p id="selected-equipment">No equipment selected</p>
+        <table id="cost-breakdown">
+            <thead>
+                <tr>
+                    <th>Equipment</th>
+                    <th>Price per Day</th>
+                    <th>Total for <span id="selected-duration">1</span> day(s)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Equipment cost breakdown will appear here -->
+            </tbody>
+        </table>
+
+        <p><strong>Total Cost: $<span id="total-cost">0</span></strong></p>
+
+        <div class="section">
+            <h3>Payment Method</h3>
+            <p><label><input type="radio" name="payment_method" value="credit_card" required> <img src="CreditCard.jpeg" alt="Credit Card" width="20"> Credit Card</label></p>
+            <p><label><input type="radio" name="payment_method" value="gpay"> <img src="GpayIcon.png" alt="Gpay" width="20"> Gpay</label></p>
+            <p><label><input type="radio" name="payment_method" value="phonepay"> <img src="PhonePay.png" alt="PhonePe" width="20"> PhonePe</label></p>
+            <p><label><input type="radio" name="payment_method" value="cash_on_delivery"> <img src="CashONdelivery.png" alt="Cash On Delivery" width="20"> Cash On Delivery</label></p>
+        </div>
+        
+        <button onclick="submitPayment()">Submit Payment</button>
+    </section>
+
+    <footer>
+        <p>Contact: 9146921800 / 9034569820</p>
+        <p>Email: <a href="mailto:farmingassist2024@gmail.com">farmingassist2024@gmail.com</a></p>
+    </footer>
+
+    <script>
+        let selectedEquipment = [];
+
+        function addEquipment() {
+            const dropdown = document.getElementById("equipmentDropdown");
+            const selectedOption = dropdown.options[dropdown.selectedIndex];
+
+            if (!selectedOption) return;
+
+            const equipmentName = selectedOption.text.split(" - ")[0];
+            const pricePerDay = parseInt(selectedOption.getAttribute("data-price"));
+
+            // Check if equipment is already added
+            if (selectedEquipment.some(e => e.name === equipmentName)) {
+                alert("This equipment is already selected.");
+                return;
+            }
+
+            // Add equipment to array
+            selectedEquipment.push({ name: equipmentName, price: pricePerDay });
+
+            // Update UI list
+            updateSelectedEquipmentList();
+            calculateTotal();
+        }
+
+        function updateSelectedEquipmentList() {
+            const list = document.getElementById("selected-equipment-list");
+            list.innerHTML = ""; // Clear list
+
+            selectedEquipment.forEach((item, index) => {
+                const listItem = document.createElement("li");
+                listItem.textContent = `${item.name} - $${item.price}/day`;
+                
+                // Remove equipment on double-click
+                listItem.ondblclick = () => removeEquipment(index);
+
+                list.appendChild(listItem);
+            });
+        }
+
+        function removeEquipment(index) {
+            selectedEquipment.splice(index, 1); // Remove item from array
+            updateSelectedEquipmentList();
+            calculateTotal();
+        }
+
+        function calculateTotal() {
+            let totalCost = 0;
+            const duration = document.getElementById("duration").value;
+            const costBreakdownTable = document.getElementById("cost-breakdown").getElementsByTagName("tbody")[0];
+            costBreakdownTable.innerHTML = ""; // Clear the table before recalculating
+
+            selectedEquipment.forEach(item => {
+                const totalForDuration = item.price * duration;
+                totalCost += totalForDuration;
+
+                // Create new row for the breakdown table
+                const row = costBreakdownTable.insertRow();
+                row.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>$${item.price}</td>
+                    <td>$${totalForDuration}</td>
+                `;
+            });
+
+            // Display selected equipment
+            document.getElementById("selected-equipment").textContent =
+                selectedEquipment.length > 0 ? selectedEquipment.map(e => e.name).join(", ") : "No equipment selected";
+
+            // Update rental duration in the table
+            document.getElementById("selected-duration").textContent = `${duration} day${duration > 1 ? "s" : ""}`;
+
+            // Update total cost
+            document.getElementById("total-cost").textContent = totalCost;
+        }
+
+        function submitPayment() {
+            const selectedPaymentMethod = document.querySelector("input[name='payment_method']:checked");
+            if (!selectedPaymentMethod) {
+                alert("Please select a payment method.");
+                return;
+            }
+
+            alert(`Payment for ${document.getElementById("selected-equipment").textContent} has been submitted using ${selectedPaymentMethod.value}.`);
+        }
+
+        // Initialize the total cost when the page loads
+        window.onload = calculateTotal;
+    </script>
+</body>
+</html>

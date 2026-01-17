@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ equipment.name }} - Krishi Kaushal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/equipments.css') }}" />
+</head>
+<body>
+
+<div class="container">
+    <div class="equipment-detail">
+        <img src="{{ equipment.image_url }}" alt="{{ equipment.name }}">
+        <div class="detail-info">
+            <h1>{{ equipment.name }}</h1>
+            <p class="description">{{ equipment.description }}</p>
+            <p class="price">Price: ₹{{ equipment.price }}</p>
+            <div class="detail-buttons">
+                <a href="{{ url_for('order.order', equipment_id=equipment.id) }}" class="rent-btn">Rent Now</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
