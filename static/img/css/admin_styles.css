@@ -1,0 +1,72 @@
+/* Global Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f7f6;
+}
+
+/* Logo and Website Name Styling */
+.logo-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+}
+
+.logo {
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+}
+
+.website-name {
+    font-size: 22px;
+    font-weight: 600;
+    color: #4CAF50;
+}
+
+/* Login Card Styling */
+.login-card {
+    width: 400px;
+    padding: 40px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Input Styling */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    font-size: 14px;
+}
+
+/* Submit Button Styling */
+.btn-primary {
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #45A049;
+}
+
+/* Toast Notification Styling */
+.toast-container {
+    z-index: 1050;
+}
+
+.toast {
+    font-size: 14px;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.toast .btn-close {
+    background: none;
+    border: none;
+}

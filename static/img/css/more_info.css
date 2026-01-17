@@ -1,0 +1,50 @@
+/* ✅ Equipment Detail */
+.equipment-detail {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.equipment-detail img {
+    width: 400px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.detail-info h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.description {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+}
+
+.detail-buttons {
+    margin-top: 20px;
+}
+
+.detail-buttons .rent-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.detail-buttons .rent-btn:hover {
+    background-color: #45a049;
+}
+
+/* ✅ Responsive Design */
+@media (max-width: 768px) {
+    .equipment-detail {
+        flex-direction: column;
+        text-align: center;
+    }
+}
